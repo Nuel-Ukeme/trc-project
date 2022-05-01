@@ -22,7 +22,7 @@ spec:
             name: http
           resources:
             limits:
-              memory: "128Mi"
+              memory: "168Mi"
               cpu:  "100m"
 ---
 apiVersion: v1
