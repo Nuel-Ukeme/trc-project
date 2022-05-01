@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trc-go-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: trc-go-app
+  template:
+    metadata:
+      labels:
+        app: trc-go-app
+    spec:
+      containers:
+        - image: immanuelumoh/trf-project:$BUILD_NUMBER
+          imagePullPolicy: Always
+          name: trf-project
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+            name: http
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu:  "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trc-go-svc
+spec:
+  selector:
+    app: trc-go
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
